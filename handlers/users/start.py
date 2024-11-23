@@ -11,11 +11,13 @@ from data.config import ADMINS
 @dp.message_handler(CommandStart())
 async def bot_start(message: types.Message):
     try:
-        if message.text == 1:
-            await message.answer("/start ni boshqatdan yuboring")
-    except ValueError:
-        await message.reply("Siz kino kodi yubormadingiz.\nKino kodi raqamdan iborat.\nQayta qidirishga kirish uchun /start ni bosing")
+        if message.text!=1:
+            print("xato yo`q")
 
+    except ValueError:
+        await message.reply(
+            "Siz kino kodi yubormadingiz.\nKino kodi raqamdan iborat.\nQayta qidirishga kirish uchun /start ni bosing")
+        return
     try:
         telegram_id = message.from_user.id
         username = message.from_user.username
