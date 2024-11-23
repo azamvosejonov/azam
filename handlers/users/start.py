@@ -12,7 +12,7 @@ from data.config import ADMINS
 async def bot_start(message: types.Message):
     try:
         if message.text!=1:
-            print("xato yo`q")
+            await message.answer("buna sonni kiritmang!")
 
     except ValueError:
         await message.reply(
