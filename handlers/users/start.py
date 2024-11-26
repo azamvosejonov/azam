@@ -32,7 +32,7 @@ async def bot_start(message: types.Message):
                 )
     except Exception as err:
         logging.exception(err)
-    await message.answer("Kodni yuboring",reply_markup=menu_button)
+    await message.answer("Kodni yuboring")
     await Search.waiting.set()
 
 
@@ -65,6 +65,7 @@ async def from_name_wait(message:types.Message, state:FSMContext):
         vd=kino['file_id']
         capt=kino['caption']
         await message.answer_video(vd,caption=capt,protect_content=True)
+        await message.answer("Quyidagi menyudan tanlang:", reply_markup=menu_button)
     else:
         await message.answer("Kino topilmadi.")
     await state.finish()
