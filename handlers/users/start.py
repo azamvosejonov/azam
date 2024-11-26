@@ -65,9 +65,9 @@ async def from_name_wait(message:types.Message, state:FSMContext):
         vd=kino['file_id']
         capt=kino['caption']
         await message.answer_video(vd,caption=capt,protect_content=True)
-        await message.answer("Quyidagi menyudan tanlang:", reply_markup=menu_button)
     else:
         await message.answer("Kino topilmadi.")
+    await message.answer("Quyidagi menyudan tanlang:", reply_markup=menu_button)
     await state.finish()
 
 @dp.message_handler(text="🎥Barcha Kinolar")
