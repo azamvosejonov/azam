@@ -5,6 +5,7 @@ from loader import dp,kino_db,user_db
 from aiogram.dispatcher import FSMContext
 import logging
 from data.config import ADMINS
+from keyboards.default.delete_menu import menu
 
 
 
@@ -54,9 +55,9 @@ async def wait_for_post_id(message: types.Message, state: FSMContext):
     if kino:
         file_id = kino['file_id']
         caption=kino_db.get_movie_by_post_id(kino_kod)
-        await message.answer_video(file_id, caption=kino['caption'], protect_content=True)
+        await message.answer_video(file_id, caption=kino['caption'], protect_content=True,reply_markup=menu)
     else:
-        await message.answer("Kino topilmadi.")
+        await message.answer("Kino topilmadi.",reply_markup=menu)
 
 @dp.message_handler(commands='name')
 async def from_name(message:types.Message):
@@ -74,3 +75,7 @@ async def from_name_wait(message:types.Message, state:FSMContext):
     else:
         await message.answer("Kino topilmadi.")
     await state.finish()
+
+@dp.message_handler(text="🎥Barcha Kinolar")
+async def bot_start(message: types.Message):
+    await message.answer("https://t.me/+N1cZ5fwcduoyMWFi")
