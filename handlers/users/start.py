@@ -5,7 +5,7 @@ from loader import dp,kino_db,user_db
 from aiogram.dispatcher import FSMContext
 import logging
 from data.config import ADMINS
-from keyboards.default.delete_menu import menu_button
+from keyboards.inline.admin import inline_button
 
 
 @dp.message_handler(CommandStart())
@@ -17,7 +17,7 @@ async def bot_start(message: types.Message):
         if not user_db.select_user(telegram_id=telegram_id):
             user_db.add_user(telegram_id=telegram_id, username=username)
             logging.info(f"Foydalanuvchi qo'shildi telegram_id:{telegram_id} username: {username}")
-            await message.answer("Siz yangi foydalanuvchisiz!",reply_markup=menu_button)
+            await message.answer("Siz yangi foydalanuvchisiz!",reply_markup=inline_button)
 
             count = user_db.count_users()
             for admin in ADMINS:
