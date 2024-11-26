@@ -5,7 +5,7 @@ from loader import dp,kino_db,user_db
 from aiogram.dispatcher import FSMContext
 import logging
 from data.config import ADMINS
-from keyboards.default.delete_menu import menu
+from keyboards.default.delete_menu import menu_button
 
 
 
@@ -25,7 +25,7 @@ async def bot_start(message: types.Message):
         if not user_db.select_user(telegram_id=telegram_id):
             user_db.add_user(telegram_id=telegram_id, username=username)
             logging.info(f"Foydalanuvchi qo'shildi telegram_id:{telegram_id} username: {username}")
-            await message.answer("Siz yangi foydalanuvchisiz!",reply_markup=menu)
+            await message.answer("Siz yangi foydalanuvchisiz!",reply_markup=menu_button)
 
             count = user_db.count_users()
             for admin in ADMINS:
@@ -39,7 +39,7 @@ async def bot_start(message: types.Message):
                 )
     except Exception as err:
         logging.exception(err)
-    await message.answer("Kodni yuboring",reply_markup=menu)
+    await message.answer("Kodni yuboring",reply_markup=menu_button)
     await Search.waiting.set()
 
 
@@ -55,9 +55,9 @@ async def wait_for_post_id(message: types.Message, state: FSMContext):
     if kino:
         file_id = kino['file_id']
         caption=kino_db.get_movie_by_post_id(kino_kod)
-        await message.answer_video(file_id, caption=kino['caption'], protect_content=True,reply_markup=menu)
+        await message.answer_video(file_id, caption=kino['caption'], protect_content=True,reply_markup=menu_button)
     else:
-        await message.answer("Kino topilmadi.",reply_markup=menu)
+        await message.answer("Kino topilmadi.",reply_markup=menu_button)
 
 @dp.message_handler(commands='name')
 async def from_name(message:types.Message):

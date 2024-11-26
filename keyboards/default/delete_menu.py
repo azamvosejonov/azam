@@ -1,7 +1,6 @@
 from aiogram.types import ReplyKeyboardMarkup,KeyboardButton
 
 
-
 menu_delete=ReplyKeyboardMarkup(
     keyboard=[
         [
@@ -14,12 +13,12 @@ menu_delete=ReplyKeyboardMarkup(
 )
 
 
-menu=ReplyKeyboardMarkup(
+menu_button=ReplyKeyboardMarkup(
     keyboard=[
         [
             KeyboardButton(text="🎥Barcha Kinolar"),
-        ],
-    ],
-    resize_keyboard=True,
+        ]
+    ],resize_keyboard = True
 )
+
 
