@@ -11,7 +11,6 @@ from keyboards.default.delete_menu import menu_button
 
 @dp.message_handler(CommandStart())
 async def bot_start(message: types.Message):
-    await message.answer("",reply_markup=menu_button)
     try:
         telegram_id = message.from_user.id
         username = message.from_user.username
@@ -19,7 +18,7 @@ async def bot_start(message: types.Message):
         if not user_db.select_user(telegram_id=telegram_id):
             user_db.add_user(telegram_id=telegram_id, username=username)
             logging.info(f"Foydalanuvchi qo'shildi telegram_id:{telegram_id} username: {username}")
-            await message.answer("Siz yangi foydalanuvchisiz!",reply_markup=menu_button)
+            await message.answer("Siz yangi foydalanuvchisiz!")
 
             count = user_db.count_users()
             for admin in ADMINS:
@@ -33,7 +32,7 @@ async def bot_start(message: types.Message):
                 )
     except Exception as err:
         logging.exception(err)
-    await message.answer("Kodni yuboring")
+    await message.answer("Kodni yuboring",reply_markup=menu_button)
     await Search.waiting.set()
 
 
