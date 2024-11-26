@@ -11,13 +11,7 @@ from keyboards.default.delete_menu import menu_button
 
 @dp.message_handler(CommandStart())
 async def bot_start(message: types.Message):
-    try:
-        if message.text==1:
-            await message.answer("/start ni qayta bosing!")
-
-    except ValueError:
-        await message.reply(
-            "Siz kino kodi yubormadingiz.\nKino kodi raqamdan iborat.\nQayta qidirishga kirish uchun /start ni bosing")
+    await message.answer("",reply_markup=menu_button)
     try:
         telegram_id = message.from_user.id
         username = message.from_user.username

@@ -10,7 +10,6 @@ from states.states import KinoAddState,KinoDeleteState,EditCap
 from keyboards.inline.admin import keyboard
 from loader import dp, kino_db, user_db
 from aiogram.dispatcher.handler import CancelHandler
-from keyboards.default.delete_menu import menu_button
 
 
 
@@ -104,12 +103,12 @@ async def message_handler(message:types.Message):
                 await bot.send_video(
                     chat_id=message.from_user.id,
                     video=data['file_id'],
-                    caption=f"{data['caption']}\n\n Eng zor kinolar @fastkinoobot da",reply_markup=menu_delete
+                    caption=f"{data['caption']}\n\n Eng zor kinolar @fastkinoobot da"
                 )
             except Exception as e:
                 await message.answer("Kino topildi yuborishda  xatolik yuz berdi.")
         else:
-            await message.answer(f"{post_id} Hech qanday kino topilmadi ",reply_markup=menu_button)
+            await message.answer(f"{post_id} Hech qanday kino topilmadi ")
 
     else:
         await message.reply("Iltimos faqat kino kodini raqam ko'rinishida yuboring ")
