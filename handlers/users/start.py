@@ -1,12 +1,11 @@
 from aiogram import types
 from aiogram.dispatcher.filters.builtin import CommandStart
 from states.states import Search, SearchName
-from loader import dp,kino_db,user_db
+from loader import dp, kino_db, user_db
 from aiogram.dispatcher import FSMContext
 import logging
 from data.config import ADMINS
-from keyboards.default.delete_menu import menu_button
-
+from keyboards.default.delete_menu import menu_button  # Menu tugmasi import qilindi
 
 
 @dp.message_handler(CommandStart())
@@ -18,7 +17,7 @@ async def bot_start(message: types.Message):
         if not user_db.select_user(telegram_id=telegram_id):
             user_db.add_user(telegram_id=telegram_id, username=username)
             logging.info(f"Foydalanuvchi qo'shildi telegram_id:{telegram_id} username: {username}")
-            await message.answer("Siz yangi foydalanuvchisiz!")
+            await message.answer("Siz yangi foydalanuvchisiz!", reply_markup=menu_button)
 
             count = user_db.count_users()
             for admin in ADMINS:
@@ -26,13 +25,14 @@ async def bot_start(message: types.Message):
                     admin,
                     f"Telegram ID: {telegram_id}\n"
                     f"Username : {username}\n"
-                    f"Toliq ismi :{message.from_user.full_name}\n"
+                    f"Toliq ismi : {message.from_user.full_name}\n"
                     f"Foydalanuvchi bazaga qo'shildi\n\n"
-                    f"Bazada <b>{count[0]}</b>  ta foydalanuvchi bor"
+                    f"Bazada <b>{count[0]}</b> ta foydalanuvchi bor"
                 )
     except Exception as err:
         logging.exception(err)
-    await message.answer("Kodni yuboring")
+
+    await message.answer("Kodni yuboring", reply_markup=menu_button)
     await Search.waiting.set()
 
 
@@ -41,35 +41,40 @@ async def wait_for_post_id(message: types.Message, state: FSMContext):
     try:
         kino_kod = int(message.text)
     except ValueError:
-        await message.reply("Siz kino kodi yubormadingiz.\nKino kodi raqamdan iborat.\nQayta qidirishga kirish uchun /start ni bosing")
+        await message.reply(
+            "Siz kino kodi yubormadingiz.\nKino kodi raqamdan iborat.\nQayta qidirishga kirish uchun /start ni bosing",
+            reply_markup=menu_button
+        )
         await state.finish()
         return
     kino = kino_db.get_movie_by_post_id(kino_kod)
     if kino:
         file_id = kino['file_id']
-        caption=kino_db.get_movie_by_post_id(kino_kod)
-        await message.answer_video(file_id, caption=kino['caption'], protect_content=True)
+        await message.answer_video(file_id, caption=kino['caption'], protect_content=True, reply_markup=menu_button)
     else:
-        await message.answer("Kino topilmadi.")
-
-@dp.message_handler(commands='name')
-async def from_name(message:types.Message):
-    await message.answer("Kino nomini yuboring")
-    await SearchName.waiting.set()
-
-@dp.message_handler(state=SearchName.waiting)
-async def from_name_wait(message:types.Message, state:FSMContext):
-    kino_name=message.text
-    kino=kino_db.get_movie_by_name(kino_name)
-    if kino:
-        vd=kino['file_id']
-        capt=kino['caption']
-        await message.answer_video(vd,caption=capt,protect_content=True)
-    else:
-        await message.answer("Kino topilmadi.")
-    await message.answer("Quyidagi menyudan tanlang:", reply_markup=menu_button)
+        await message.answer("Kino topilmadi.", reply_markup=menu_button)
     await state.finish()
 
+
+@dp.message_handler(commands='name')
+async def from_name(message: types.Message):
+    await message.answer("Kino nomini yuboring", reply_markup=menu_button)
+    await SearchName.waiting.set()
+
+
+@dp.message_handler(state=SearchName.waiting)
+async def from_name_wait(message: types.Message, state: FSMContext):
+    kino_name = message.text
+    kino = kino_db.get_movie_by_name(kino_name)
+    if kino:
+        vd = kino['file_id']
+        capt = kino['caption']
+        await message.answer_video(vd, caption=capt, protect_content=True, reply_markup=menu_button)
+    else:
+        await message.answer("Kino topilmadi.", reply_markup=menu_button)
+    await state.finish()
+
+
 @dp.message_handler(text="🎥Barcha Kinolar")
-async def bot_start(message: types.Message):
-    await message.answer("https://t.me/+N1cZ5fwcduoyMWFi")
+async def all_movies(message: types.Message):
+    await message.answer("https://t.me/+N1cZ5fwcduoyMWFi", reply_markup=menu_button)
