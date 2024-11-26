@@ -37,10 +37,12 @@ ad_menu=InlineKeyboardMarkup(
     ]
 )
 
-inline_button = InlineKeyboardMarkup(row_width=1)  # Qator kengligi
-inline_button.add(
-    [
-        InlineKeyboardButton(text="🎥 Barcha Kinolar", url="https://t.me/+N1cZ5fwcduoyMWFi")
+inline_button = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text="🎥 Barcha Kinolar", url="https://t.me/+N1cZ5fwcduoyMWFi")
+        ]
     ]
+
 )
 
