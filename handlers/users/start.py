@@ -17,7 +17,7 @@ async def bot_start(message: types.Message):
         if not user_db.select_user(telegram_id=telegram_id):
             user_db.add_user(telegram_id=telegram_id, username=username)
             logging.info(f"Foydalanuvchi qo'shildi telegram_id:{telegram_id} username: {username}")
-            await message.answer("Siz yangi foydalanuvchisiz!")
+            await message.answer("Siz yangi foydalanuvchisiz!",reply_markup=menu_button)
 
             count = user_db.count_users()
             for admin in ADMINS:
@@ -31,7 +31,7 @@ async def bot_start(message: types.Message):
                 )
     except Exception as err:
         logging.exception(err)
-    await message.answer("Kodni yuboring",reply_markup=menu_delete)
+    await message.answer("Kodni yuboring")
     await Search.waiting.set()
 
 
@@ -66,7 +66,6 @@ async def from_name_wait(message:types.Message, state:FSMContext):
         await message.answer_video(vd,caption=capt,protect_content=True)
     else:
         await message.answer("Kino topilmadi.")
-    await message.answer("Quyidagi menyudan tanlang:", reply_markup=menu_button)
     await state.finish()
 
 @dp.message_handler(text="🎥Barcha Kinolar")
