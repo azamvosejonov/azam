@@ -5,8 +5,7 @@ from loader import dp,kino_db,user_db
 from aiogram.dispatcher import FSMContext
 import logging
 from data.config import ADMINS
-from keyboards.default.delete_menu import menu_button
-
+from keyboards.default.delete_menu import menu_button, menu_delete
 
 
 @dp.message_handler(CommandStart())
@@ -32,7 +31,7 @@ async def bot_start(message: types.Message):
                 )
     except Exception as err:
         logging.exception(err)
-    await message.answer("Kodni yuboring")
+    await message.answer("Kodni yuboring",reply_markup=menu_delete)
     await Search.waiting.set()
 
 
