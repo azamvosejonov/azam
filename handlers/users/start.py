@@ -39,7 +39,7 @@ async def bot_start(message: types.Message):
                 )
     except Exception as err:
         logging.exception(err)
-    await message.answer("Kodni yuboring",reply_markup=menu_button)
+    await message.answer("Kodni yuboring")
     await Search.waiting.set()
 
 
@@ -55,9 +55,9 @@ async def wait_for_post_id(message: types.Message, state: FSMContext):
     if kino:
         file_id = kino['file_id']
         caption=kino_db.get_movie_by_post_id(kino_kod)
-        await message.answer_video(file_id, caption=kino['caption'], protect_content=True,reply_markup=menu_button)
+        await message.answer_video(file_id, caption=kino['caption'], protect_content=True)
     else:
-        await message.answer("Kino topilmadi.",reply_markup=menu_button)
+        await message.answer("Kino topilmadi.")
 
 @dp.message_handler(commands='name')
 async def from_name(message:types.Message):
