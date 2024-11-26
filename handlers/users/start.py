@@ -5,7 +5,7 @@ from loader import dp,kino_db,user_db
 from aiogram.dispatcher import FSMContext
 import logging
 from data.config import ADMINS
-from keyboards.default.delete_menu import menu_button, menu_delete
+from keyboards.default.delete_menu import menu_button
 
 
 @dp.message_handler(CommandStart())
