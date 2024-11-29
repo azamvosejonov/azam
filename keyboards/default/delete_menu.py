@@ -12,6 +12,14 @@ menu_delete=ReplyKeyboardMarkup(
     one_time_keyboard=True
 )
 
+menu=ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text="🎥Barcha Kinolar"),
+        ],
+    ],
+    resize_keyboard=True,
+)
 
 
 
