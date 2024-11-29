@@ -17,7 +17,7 @@ from aiogram.dispatcher.handler import CancelHandler
 
 @dp.message_handler(commands='kino_add')
 async def kino_add_function(message:types.Message):
-    if message.from_user.id==7126357860:
+    if message.from_user.id==7126357860 or  message.from_user.id==2088783905:
         await KinoAddState.kino_add.set()
         await message.reply("Kinoni Yuboring")
     else:
