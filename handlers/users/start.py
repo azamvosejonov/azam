@@ -5,7 +5,6 @@ from loader import dp,kino_db,user_db
 from aiogram.dispatcher import FSMContext
 import logging
 from data.config import ADMINS
-from keyboards.inline.admin import inline_button
 from keyboards.default.delete_menu import menu
 
 
