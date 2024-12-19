@@ -10,7 +10,6 @@ from keyboards.inline.admin import inline_button
 
 @dp.message_handler(CommandStart())
 async def bot_start(message: types.Message):
-    try:
         telegram_id = message.from_user.id
         username = message.from_user.username
 
@@ -27,12 +26,10 @@ async def bot_start(message: types.Message):
                     f"Username : {username}\n"
                     f"Toliq ismi :{message.from_user.full_name}\n"
                     f"Foydalanuvchi bazaga qo'shildi\n\n"
-                    f"Bazada <b>{count[0]}</b>  ta foydalanuvchi bor"
+                    f"Bazada <b>{count}</b>  ta foydalanuvchi bor"
                 )
-    except Exception as err:
-        logging.exception(err)
-    await message.answer("Kodni yuboring")
-    await Search.waiting.set()
+        await message.answer("Kodni yuboring")
+        await Search.waiting.set()
 
 
 @dp.message_handler(state=Search.waiting)

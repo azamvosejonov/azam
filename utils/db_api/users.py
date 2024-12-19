@@ -35,7 +35,8 @@ class UserDatabase(Database):
         sql="""
             SELECT COUNT(*) FROM Users
             """
-        self.execute(sql,fetchone=True)
+        result=self.execute(sql,fetchone=True)
+        return result[0]
 
     def delete_users(self):
         self.execute("DELETE FROM Users WHERE TRUE",commit=True)
@@ -59,4 +60,7 @@ class UserDatabase(Database):
         sql="""
             INSERT INTO Users(telegram_id,username,created_at) VALUES(?,?,?)
             """
+        if created_at is None:
+            created_at=datetime.now().isoformat()
+        return self.execute(sql,parameters=(telegram_id,username,created_at),commit=True)
 
